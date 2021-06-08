@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %} Урок на тему {{lesson.theme}} {% endblock %}
+
+{% block content %}
+
+Дата: {{lesson.date}}<br>Урок на тему: {{lesson.theme}}<br>
+	Проведем перекличку
+	{% for student in students_list %}
+		<a href="{% url 'o_journal:detail' student.id %}"><ol>{{student.last_name}} {{student.first_name}} {{student.middle_name}}</ol></a>
+
+	{% endfor %}
+{% endblock %}

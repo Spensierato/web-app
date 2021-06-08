@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Журнал учителя{% endblock %}
+
+{% block content %}
+
+	{% if students_list %}
+	
+<img src="https://i.ibb.co/52NLJg2/logo.png"><br>
+<h1>Список учеников</h1>
+		{% for student in students_list %}
+			<a href="{% url 'o_journal:detail' student.id %}"><ol>{{student.last_name}} {{student.first_name}} {{student.middle_name}}| {{student.group_number}}</ol></a>
+
+
+		{% endfor %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("button").click(function(){
+    $("a, h1").toggle();
+  });
+});
+</script>
+<button>Убрать/Показать всех учеников</button>
+	{% else %}
+		Нет учеников
+	{% endif %}
+		{% if groups_list %}
+<br><h2>Список групп</h2>
+	{% for group in groups_list %}
+		<a href="{% url 'o_journal:group_detail' group.id %}"><ol>Номер группы: {{group.group_number}}</ol>
+
+	{% endfor %}
+	{% else %}
+		Нет групп обучения
+	{% endif %}
+{% endblock %}

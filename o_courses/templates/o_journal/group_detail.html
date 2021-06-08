@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %} Ученики группы № {{group.group_number}} {% endblock %}
+
+{% block content %}
+
+Ученики группы № {{group.group_number}}
+	{% for student in students_list %}
+		<a href="{% url 'o_journal:detail' student.id %}"><ol>{{student.last_name}} {{student.first_name}} {{student.middle_name}}</ol></a>
+
+	{% endfor %}
+<form action="{% url 'o_journal:add_lesson' group.id %}" method="POST">
+
+{% csrf_token %}
+	
+<input type="text" required placeholder="Тема урока" name="name"><br>
+<button type="submit">Начать урок</button>
+
+</form>
+{% endblock %}

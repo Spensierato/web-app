@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}{{student.last_name}} {{student.first_name}} {{student.middle_name}}{% endblock %}
+
+{% block content %}
+
+<h2 style="color:FireBrick;">{{student.last_name}} {{student.first_name}} {{student.middle_name}}</h2>
+
+<p style="color:SaddleBrown;">{{student.group_number}}<br>Email: {{student.email}}<br>Средняя оценка: {{student.av_grade}}</p>
+
+<hr>
+
+{% if parents_fios %}
+
+	{% for parent in parents_fios %}
+		<strong style="color:FireBrick;">Контакты родителей:</strong>
+		<p>
+			<strong>{{parent.parents_fio}}</strong>
+			<p>{{parent.parents_contacts}}</p>
+		</p>
+	{% endfor %}
+
+{% else %}
+Контакты родителей не найдены
+{% endif %}
+
+<hr>
+
+<form action="{% url 'o_journal:add_parents' student.id %}" method="POST">
+
+	{% csrf_token %}
+	
+	<input type="text" required placeholder="ФИО родителей" name="name"><br>
+	<textarea name="text" required placeholder="Контакты родителей" cols="40" rows="15">  
+	</textarea><br>
+
+	<button type="submit">Добавить контакты родителей</button>
+
+</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("button").click(function(){
+    $("form").toggle();
+  });
+});
+</script>
+<button>Скрыть/Показать форму</button>
+
+{% endblock %}
