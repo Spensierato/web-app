@@ -7,7 +7,7 @@
 	{% if students_list %}
 	
 <img src="https://i.ibb.co/52NLJg2/logo.png"><br>
-<h1>Список всех учеников </h1>
+<h1>Список учеников </h1>
 		{% for student in students_list %}
 			<a href="{% url 'o_journal:detail' student.id %}"><ol>{{student.last_name}} {{student.first_name}} {{student.middle_name}}| {{student.group_number}}</ol></a>
 
