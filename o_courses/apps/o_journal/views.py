@@ -1,8 +1,10 @@
+from .models import Group, Student, Lesson, Exam, Parents, Homework
+
+import datetime
+
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.urls import reverse
-from .models import Group, Student, Lesson, Exam, Parents, Homework
-import datetime
 from django.utils import timezone
 
 
@@ -12,6 +14,7 @@ def index(request):
 	context = {'students_list': students_list, 'groups_list': groups_list}
 	
 	return render(request, 'o_journal/list.html', context)
+
 
 def detail(request, student_id):
 	try:
@@ -23,6 +26,7 @@ def detail(request, student_id):
 
 	return render(request, 'o_journal/detail.html', {'student': student, 'parents_fios': parents_fios})
 
+
 def add_parents(request, student_id):
 	try:
 		student = Student.objects.get( id = student_id )
@@ -33,14 +37,16 @@ def add_parents(request, student_id):
 
 	return HttpResponseRedirect( reverse('o_journal:detail', args = (student.id,)) )
 
+
 def group_detail(request, group_id):
 	students_list = Student.objects.filter( group_number = group_id)
+	lesson_list = Lesson.objects.filter( group_number = group_id )
 	try:
 		group = Group.objects.get( id = group_id)
 	except:
 		raise Http404("Группа не найдена")
 
-	return render(request, 'o_journal/group_detail.html', {'group': group, 'students_list': students_list} )
+	return render(request, 'o_journal/group_detail.html', {'group': group, 'students_list': students_list, 'lesson_list': lesson_list} )
 
 
 def add_lesson(request, group_id):
@@ -50,6 +56,16 @@ def add_lesson(request, group_id):
 	except:
 		raise Http404("Группа не найдена")
 
-	group.lesson_set.create(theme = request.POST['name'], date = timezone.now())
+	group.lesson_set.create(theme = request.POST['name'], date = timezone.now() )
 
-	return render( request, 'o_journal/lesson.html', {'group': group, 'students_list': students_list} ) 
+	return render( request, 'o_journal/lesson.html', {'group': group, 'students_list': students_list} )
+
+
+def add_homework(request, group_id):
+	pass
+
+
+def add_exam(request, group_id):
+	pass
+
+

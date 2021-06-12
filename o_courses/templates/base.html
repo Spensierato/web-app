@@ -30,7 +30,9 @@ a:active {
 <body style="background-color: #ffde59">
 
 
-	{% block content %}{% endblock %}
+	{% block content %}
+  <a href="{% url 'o_journal:index' %}"><img src="https://i.ibb.co/52NLJg2/logo.png" /></a><br>
+  {% endblock %}
 
 </body>
 </html>

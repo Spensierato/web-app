@@ -3,7 +3,7 @@
 {% block title %} Ученики группы № {{group.group_number}} {% endblock %}
 
 {% block content %}
-
+<a href="{% url 'o_journal:index' %}"><img src="https://i.ibb.co/52NLJg2/logo.png" /></a><br>
 Ученики группы № {{group.group_number}}
 	{% for student in students_list %}
 		<a href="{% url 'o_journal:detail' student.id %}"><ol>{{student.last_name}} {{student.first_name}} {{student.middle_name}}</ol></a>
@@ -17,4 +17,10 @@
 <button type="submit">Начать урок</button>
 
 </form>
+<br>
+
+Прошлые уроки группы № {{group.group_number}}:
+	{% for lesson in lesson_list %}
+		<a href=""><ol>{{lesson.date}} : {{lesson.theme}}</ol></a>
+	{% endfor %}
 {% endblock %}

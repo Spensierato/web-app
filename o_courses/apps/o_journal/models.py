@@ -83,7 +83,3 @@ class Exam(models.Model):
 	class Meta:
 		verbose_name = "Контрольная работа"
 		verbose_name_plural = 'Контрольные работы'
-	
-	
-
-	

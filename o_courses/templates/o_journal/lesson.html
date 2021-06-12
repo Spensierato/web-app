@@ -3,11 +3,12 @@
 {% block title %} Урок на тему {{lesson.theme}} {% endblock %}
 
 {% block content %}
+<a href="{% url 'o_journal:index' %}"><img src="https://i.ibb.co/52NLJg2/logo.png" /></a><br>
 
 Дата: {{lesson.date}}<br>Урок на тему: {{lesson.theme}}<br>
 	Проведем перекличку
 	{% for student in students_list %}
-		<a href="{% url 'o_journal:detail' student.id %}"><ol>{{student.last_name}} {{student.first_name}} {{student.middle_name}}</ol></a>
+		<a href="{% url 'o_journal:detail' student.id %}"><ol>{{student.last_name}} {{student.first_name}} {{student.middle_name}} {{lesson.date}}</ol></a>
 
 	{% endfor %}
 {% endblock %}

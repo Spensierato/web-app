@@ -4,23 +4,26 @@
 
 {% block content %}
 
-	{% if students_list %}
-	
-<img src="https://i.ibb.co/52NLJg2/logo.png"><br>
-<h1>Список всех учеников </h1>
-		{% for student in students_list %}
-			<a href="{% url 'o_journal:detail' student.id %}"><ol>{{student.last_name}} {{student.first_name}} {{student.middle_name}}| {{student.group_number}}</ol></a>
-
-
-		{% endfor %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
   $("button").click(function(){
-    $("a, h1").toggle();
+    $("span, h1").toggle();
   });
 });
 </script>
+
+<a href="{% url 'o_journal:index' %}"><img src="https://i.ibb.co/52NLJg2/logo.png" /></a><br>
+
+	{% if students_list %}
+<h1>Список всех учеников </h1>
+		
+		{% for student in students_list %}
+			<span><a href="{% url 'o_journal:detail' student.id %}"><ol>{{student.last_name}} {{student.first_name}} {{student.middle_name}}| {{student.group_number}}</ol></a></span>
+
+
+		{% endfor %}
+
 <button>Убрать/Показать всех учеников</button>
 	{% else %}
 		Нет учеников

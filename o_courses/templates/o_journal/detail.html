@@ -3,6 +3,7 @@
 {% block title %}{{student.last_name}} {{student.first_name}} {{student.middle_name}}{% endblock %}
 
 {% block content %}
+<a href="{% url 'o_journal:index' %}"><img src="https://i.ibb.co/52NLJg2/logo.png" /></a>
 
 <h2 style="color:FireBrick;">{{student.last_name}} {{student.first_name}} {{student.middle_name}}</h2>
 
