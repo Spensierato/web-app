@@ -3,12 +3,29 @@
 {% block title %} Ученики группы № {{group.group_number}} {% endblock %}
 
 {% block content %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("#hide").click(function(){
+    $("span").hide();
+  });
+  $("#show").click(function(){
+    $("span").show();
+  });
+});
+</script>
+
+
 <a href="{% url 'o_journal:index' %}"><img src="https://i.ibb.co/52NLJg2/logo.png" /></a><br>
-Ученики группы № {{group.group_number}}
+<h1>Ученики группы № {{group.group_number}}</h1>
 	{% for student in students_list %}
 		<a href="{% url 'o_journal:detail' student.id %}"><ol>{{student.last_name}} {{student.first_name}} {{student.middle_name}}</ol></a>
 
 	{% endfor %}
+
+<strong>Начать урок</strong>
+
 <form action="{% url 'o_journal:add_lesson' group.id %}" method="POST">
 
 {% csrf_token %}
@@ -17,10 +34,57 @@
 <button type="submit">Начать урок</button>
 
 </form>
+
+<strong>Задать домашнее задание</strong>
+
+<form action="{% url 'o_journal:add_homework' group.id %}" method="POST">
+
+	{% csrf_token %}
+	
+	<input type="text" required placeholder="Тема домашнего задания" name="name">
+	<input type="date" name="date">
+	<br>
+	<textarea name="text" required placeholder="Домашнее задание" cols="100" rows="10">  
+	</textarea>
+	<br>
+	<button type="submit">Добавить домашнее задание</button>
+
+</form>
 <br>
 
-Прошлые уроки группы № {{group.group_number}}:
+<strong>Назначить проведение контрольной</strong>
+
+<form action="{% url 'o_journal:add_exam' group.id %}" method="POST">
+
+	{% csrf_token %}
+	
+	<input type="text" required placeholder="Тема контрольной работы" name="name">
+	<br>
+	<textarea name="text" required placeholder="Внесите задания для контрольной работы" cols="100" rows="50">  
+	</textarea>
+	<br>
+	<button type="submit">Назначить контрольную</button>
+
+</form>
+<br>
+
+<h4>У группы № {{group.group_number}} ожидается проведение контрольной работы:</h4>
+	{% for exam in exam_list %}
+		<p>Тема контрольной работы: {{exam.exam_work_title}}<br>{{exam.exam_work_text}}</p>
+	{% endfor %}
+<br>
+
+<h4>Домашние задания группы № {{group.group_number}}:</h4>
+	{% for homework in homework_list %}
+		<p>{{homework.hw_theme}}<br>Делайн по выполнению: {{homework.hw_date}}<br>{{homework.homework}}</p><br>
+	{% endfor %}
+
+<h4>Прошлые уроки группы № {{group.group_number}}:</h4>
+<br>
+<button id="hide">Скрыть прошлые уроки</button>
+<button id="show">Показать прошлые уроки</button>
+<br>
 	{% for lesson in lesson_list %}
-		<a href=""><ol>{{lesson.date}} : {{lesson.theme}}</ol></a>
+		<span><a href=""><ol>{{lesson.date}} : {{lesson.theme}} </ol></a></span>
 	{% endfor %}
 {% endblock %}

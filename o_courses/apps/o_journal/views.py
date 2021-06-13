@@ -39,14 +39,21 @@ def add_parents(request, student_id):
 
 
 def group_detail(request, group_id):
-	students_list = Student.objects.filter( group_number = group_id)
-	lesson_list = Lesson.objects.filter( group_number = group_id )
+	students_list = Student.objects.filter(group_number = group_id)
+	lesson_list = Lesson.objects.filter(group_number = group_id)
+	homework_list = Homework.objects.filter(group_number = group_id)
+	exam_list = Exam.objects.filter(group_number = group_id)
 	try:
 		group = Group.objects.get( id = group_id)
 	except:
 		raise Http404("Группа не найдена")
 
-	return render(request, 'o_journal/group_detail.html', {'group': group, 'students_list': students_list, 'lesson_list': lesson_list} )
+	return render(request, 'o_journal/group_detail.html', {'group': group, 
+		'students_list': students_list, 
+		'lesson_list': lesson_list, 
+		'homework_list': homework_list, 
+		'exam_list': exam_list} 
+		)
 
 
 def add_lesson(request, group_id):
@@ -62,10 +69,22 @@ def add_lesson(request, group_id):
 
 
 def add_homework(request, group_id):
-	pass
+	try:
+		group = Group.objects.get( id = group_id)
+	except:
+		raise Http404("Группа не найдена")
+
+	group.homework_set.create(hw_theme = request.POST['name'], homework = request.POST['text'], hw_date = request.POST['date'])
+
+	return HttpResponseRedirect( reverse('o_journal:group_detail', args = (group.id,)) )
 
 
 def add_exam(request, group_id):
-	pass
+	try:
+		group = Group.objects.get( id = group_id)
+	except:
+		raise Http404("Группа не найдена")
 
+	group.exam_set.create(exam_work_title = request.POST['name'], exam_work_text = request.POST['text'] )
 
+	return HttpResponseRedirect( reverse('o_journal:group_detail', args = (group.id,)) )
