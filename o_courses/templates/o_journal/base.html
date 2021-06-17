@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<style>
+a:link {
+  color: SaddleBrown;
+  background-color: transparent;
+  text-decoration: none;
+}
+a:visited {
+  color: SaddleBrown;
+  background-color: transparent;
+  text-decoration: none;
+}
+a:hover {
+  color: OrangeRed;
+  background-color: transparent;
+  text-decoration: none;
+}
+a:active {
+  color: OrangeRed;
+  background-color: transparent;
+  text-decoration: none;
+}
+</style>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{% block title %} Журнал учителя {% endblock %}</title>
+</head>
+<body style="background-color: #ffde59">
+
+
+	{% block content %}
+  <a href="{% url 'o_journal:index' %}"><img src="https://i.ibb.co/52NLJg2/logo.png" /></a><br>
+  {% endblock %}
+
+</body>
+</html>

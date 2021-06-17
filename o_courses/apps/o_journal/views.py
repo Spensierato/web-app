@@ -2,7 +2,7 @@ from .models import Group, Student, Lesson, Exam, Parents, Homework
 
 import datetime
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.urls import reverse
 from django.utils import timezone
@@ -66,6 +66,15 @@ def add_lesson(request, group_id):
 	group.lesson_set.create(theme = request.POST['name'], date = timezone.now() )
 
 	return render( request, 'o_journal/lesson.html', {'group': group, 'students_list': students_list} )
+
+
+def lesson_detail(request, lesson_id):
+	try:
+		lesson = Lesson.objects.get( id = lesson_id )
+	except:
+		raise Http404("Урок не найден")
+	students_list = Student.objects.filter( group_number = group_id)
+	return render( request, 'o_journal/lesson.html', {'lesson': lesson, 'students_list': students_list} )
 
 
 def add_homework(request, group_id):
